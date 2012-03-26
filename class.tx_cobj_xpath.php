@@ -194,7 +194,7 @@ class tx_cobj_xpath {
 			} else {
 				$errors = libxml_get_errors();
 				foreach ($errors as $error) {
-					$GLOBALS['TT']->setTSlogMessage('XML exception: ' . $this->display_xml_error($error), 3);
+					$GLOBALS['TT']->setTSlogMessage('XML exception: ' . $this->getXmlErrorCode($error), 3);
 				}
 				libxml_clear_errors();
 			}
@@ -213,7 +213,7 @@ class tx_cobj_xpath {
 	 * @param LibXMLError $error
 	 * @return string
 	 */
-	private function display_xml_error(LibXMLError $error) {
+	private function getXmlErrorCode(LibXMLError $error) {
 		$errormessage = '';
 
 		switch ($error->level) {
