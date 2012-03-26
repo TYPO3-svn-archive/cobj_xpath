@@ -22,8 +22,9 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-if (!defined ('TYPO3_MODE'))
-	die ('Access denied.');
+if (!defined('TYPO3_MODE')) {
+	die('Access denied.');
+}
 
 /**
  * Extends tslib_cObj with XPATH cobject
@@ -33,77 +34,86 @@ if (!defined ('TYPO3_MODE'))
  * @package TYPO3
  * @subpackage tx_cobj_xpath
  */
-/**
- * [CLASS/FUNCTION INDEX of SCRIPT]
- *
- *   46: class tx_cobj_xpath
- *   57:     public function cObjGetSingleExt($name, $conf, $TSkey, &$oCObj)
- *  202:     private function display_xml_error($error, $xml)
- *
- * TOTAL FUNCTIONS: 2
- *
- */
 class tx_cobj_xpath {
 
 	/**
-	 * Rendering function for the XPATH content object
+	 * Renders the XPATH content object
 	 *
-	 * @param	string		XPATH
-	 * @param	array		TypoScript configuration of the cObj
-	 * @param	string		Key in the TypoScript array passed to this function
-	 * @param	object		Reference to the parent class
-	 * @return	mixed
+	 * @param string $name XPATH
+	 * @param array $conf TypoScript configuration of the cObj
+	 * @param string $TSkey Key in the TypoScript array passed to this function
+	 * @param tslib_cObj $oCObj Reference to the parent class
+	 * @return mixed
 	 */
-	public function cObjGetSingleExt($name, $conf, $TSkey, &$oCObj) {
+	public function cObjGetSingleExt($name, array $conf, $TSkey, tslib_cObj &$oCObj) {
 
 		$content = '';
 
-		// fetch xml data
+			// Check if the SimpleXML extension is loaded at all
+		if (!extension_loaded('SimpleXML') || !extension_loaded('libxml')) {
+			$GLOBALS['TT']->setTSlogMessage('The PHP extensions SimpleXML and libxml must be loaded.', 3);
+			return $oCObj->stdWrap($content, $conf['stdWrap.']);
+		}
+
+			// Fetch XML data
 		if (is_array($conf['source.']) || isset($conf['source'])) {
 
-			// get XML by url
+				// Get XML by URL
 			if (isset($conf['source.']['url']) && t3lib_div::isValidUrl($conf['source.']['url'])) {
 
 				$xmlsource = t3lib_div::getURL($conf['source.']['url'], 0, FALSE);
-				if (!$xmlsource) $GLOBALS['TT']->setTSlogMessage('XML could not be fetched from URL.', 3);
-
-			// get XML with stdWrap
+				if ($xmlsource === FALSE) {
+					$GLOBALS['TT']->setTSlogMessage('XML could not be fetched from URL.', 3);
+				}
+				// Get XML with stdWrap
 			} else {
-				if ($conf['source.']['url']) unset($conf['source.']['url']);
+				if (isset($conf['source.']['url'])) {
+					unset($conf['source.']['url']);
+				}
 				$xmlsource = $oCObj->stdWrap($conf['source'], $conf['source.']);
 			}
+
 		} else {
 			$GLOBALS['TT']->setTSlogMessage('Source for XML is not configured.', 3);
 			return $oCObj->stdWrap($content, $conf['stdWrap.']);
 		}
 
-		// xpath expression
+			// XPath expression
 		if (is_array($conf['expression.']) || isset($conf['expression'])) {
 			$expression = $oCObj->stdWrap($conf['expression'], $conf['expression.']);
 		} else {
-			$GLOBALS['TT']->setTSlogMessage('No xpath expression set.', 3);
+			$GLOBALS['TT']->setTSlogMessage('No XPath expression set.', 3);
 			return $oCObj->stdWrap($content, $conf['stdWrap.']);
 		}
 
-		if ($xmlsource) {
+		if (!empty($xmlsource)) {
 
-			// try to load a simpleXML object
+				// Load a simpleXML object
 			libxml_use_internal_errors(true);
 			$xml = simplexml_load_string($xmlsource);
 
 			if ($xml instanceof SimpleXMLElement) {
 
-				// possible namespaces for query
-				if (TRUE == $conf['registerNamespace.']['getFromSource']) {
+					// Possible namespaces for query
+				if (isset($conf['registerNamespace.']['getFromSource'])
+						&& (boolean) $conf['registerNamespace.']['getFromSource'] === TRUE) {
 					$namespaces = array_merge($xml->getDocNamespaces(), $xml->getNamespaces());
-					if ($conf['registerNamespace.']['getFromSource.']['debug']) t3lib_div::debug($namespaces);
-					if (count($namespaces) > 0 && isset($conf['registerNamespace.']['getFromSource.']['listNum'])) {
+						// Print namespaces
+					if (isset($conf['registerNamespace.']['getFromSource.']['debug'])
+						&& (boolean) $conf['registerNamespace.']['getFromSource.']['debug'] === TRUE) {
+						t3lib_utility_Debug::debug($namespaces);
+					}
+					if (count($namespaces) > 0
+							&& isset($conf['registerNamespace.']['getFromSource.']['listNum'])
+							&& is_array($conf['registerNamespace.']['getFromSource.']['listNum.'])) {
 						$listNumData = array();
 						foreach ($namespaces as $prefix => $ns) {
-							$listNumData[] = $prefix.'|'.$ns;
+							$listNumData[] = $prefix . '|' . $ns;
 						}
 						$listNumConf['listNum'] = $conf['registerNamespace.']['getFromSource.']['listNum'];
-						if (is_array($conf['registerNamespace.']['getFromSource.']['listNum.'])) $listNumConf['listNum.'] = $conf['registerNamespace.']['getFromSource.']['listNum.'];
+						if (is_array($conf['registerNamespace.']['getFromSource.']['listNum.'])) {
+							$listNumConf['listNum.'] = $conf['registerNamespace.']['getFromSource.']['listNum.'];
+						}
 						$listNumConf['listNum.']['splitChar'] = ',';
 						$conf['registerNamespace'] = $oCObj->stdWrap_listNum(implode(',', $listNumData), $listNumConf);
 					} else {
@@ -113,59 +123,63 @@ class tx_cobj_xpath {
 
 				if (isset($conf['registerNamespace'])) {
 					$namespace = t3lib_div::trimExplode('|', $conf['registerNamespace'], 1);
-					if (count($namespace) == 2 && t3lib_div::isValidUrl($namespace[1])) $xml->registerXPathNamespace($namespace[0], $namespace[1]);
+					if (count($namespace) == 2 && t3lib_div::isValidUrl($namespace[1])) {
+						$xml->registerXPathNamespace($namespace[0], $namespace[1]);
+					}
 				}
 
-				// perform xpath query
+					// Perform XPath query
 				$result = $xml->xpath($expression);
 
-				// if there was a result
-				if (is_array($result) && count($result) > 0) {
+					// If there was a result
+				if (is_array($result) && count($result) > 0 && isset($conf['return'])) {
 
-					// otherwise return configured format for the query result
+						// Return configured format for the query result
 					switch ($conf['return']) {
 
 						case 'count':
 							$content = count($result);
 							return $oCObj->stdWrap($content, $conf['stdWrap.']);
-						break;
+							break;
 
 						case 'boolean':
 							$content = TRUE;
 							return $oCObj->stdWrap($content, $conf['stdWrap.']);
-						break;
+							break;
 
 						case 'xml':
 							foreach ($result as $key => $value) {
 								$result[$key] = $value->asXML();
 							}
-						break;
+							break;
 
 						case 'array':
 							foreach ($result as $key => $value) {
-								// idea from soloman at http://www.php.net/manual/en/book.simplexml.php
+									// Convert to real PHP array
+									// Idea from soloman at http://www.php.net/manual/en/book.simplexml.php
 								$json = json_encode($value);
-								$result[$key] = json_decode($json,TRUE);
+								$result[$key] = json_decode($json, TRUE);
 							}
-							// replace the current $cObj->data array with the result array
+								// Replace the current $cObj->data array with the result array
 							$oCObj->data = $result;
-						break;
+							break;
 
 						case 'json':
 							foreach ($result as $key => $value) {
 								$result[$key] = json_encode($value);
 							}
-						break;
+							break;
 
 						case 'string':
+							// Fall through
 						default:
 							foreach ($result as $key => $value) {
 								$result[$key] = (string) $value;
 							}
-						break;
+							break;
 					}
 
-					// hand the result to split for further treatment with TS
+						// Hand the result to split for further treatment with TS
 					if (is_array($conf['resultObj.'])) {
 						$conf['resultObj.']['token'] = '###COBJ_XPATH###';
 						$content = $oCObj->splitObj(implode('###COBJ_XPATH###', $result), $conf['resultObj.']);
@@ -174,13 +188,13 @@ class tx_cobj_xpath {
 					}
 
 				} else {
-					$GLOBALS['TT']->setTSlogMessage('The xpath query returned no results.', 2);
+					$GLOBALS['TT']->setTSlogMessage('The XPath query returned no results.', 2);
 				}
 
 			} else {
 				$errors = libxml_get_errors();
 				foreach ($errors as $error) {
-					$GLOBALS['TT']->setTSlogMessage('XML exception: '.$this->display_xml_error($error, $xml), 3);
+					$GLOBALS['TT']->setTSlogMessage('XML exception: ' . $this->display_xml_error($error), 3);
 				}
 				libxml_clear_errors();
 			}
@@ -193,37 +207,38 @@ class tx_cobj_xpath {
 	}
 
 	/**
-	 * Returns XML error codes for the TSFE admin panel. Function inspired by http://www.php.net/manual/en/function.libxml-get-errors.php
+	 * Returns XML error codes for the TSFE admin panel.
+	 * Function inspired by http://www.php.net/manual/en/function.libxml-get-errors.php
 	 *
-	 * @param	string
-	 * @param	string
-	 * @return	string
+	 * @param LibXMLError $error
+	 * @return string
 	 */
-	private function display_xml_error($error, $xml) {
+	private function display_xml_error(LibXMLError $error) {
+		$errormessage = '';
 
 		switch ($error->level) {
 			case LIBXML_ERR_WARNING:
-				$errormessage .= 'Warning '.$error->code.': ';
-			break;
+				$errormessage .= 'Warning ' . $error->code . ': ';
+				break;
 			case LIBXML_ERR_ERROR:
-				$errormessage .= 'Error '.$error->code.': ';
-			break;
+				$errormessage .= 'Error ' . $error->code . ': ';
+				break;
 			case LIBXML_ERR_FATAL:
-				$errormessage .= 'Fatal error '.$error->code.': ';
-			break;
+				$errormessage .= 'Fatal error ' . $error->code . ': ';
+				break;
 		}
 
-		$errormessage .= trim($error->message).' - Line: '.$error->line.', Column:'.$error->column;
+		$errormessage .= trim($error->message) . ' - Line: ' . $error->line . ', Column:' . $error->column;
 
 		if ($error->file) {
-			$errormessage .= ' - File: '.$error->file;
+			$errormessage .= ' - File: ' . $error->file;
 		}
 
-	    return $errormessage;
+		return $errormessage;
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cobj_xpath/class.tx_cobj_xpath.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cobj_xpath/class.tx_cobj_xpath.php']);
+if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cobj_xpath/class.tx_cobj_xpath.php'])) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cobj_xpath/class.tx_cobj_xpath.php']);
 }
 ?>
