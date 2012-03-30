@@ -71,6 +71,10 @@ class tx_cobj_xpath {
 					unset($conf['source.']['url']);
 				}
 				$xmlsource = $oCObj->stdWrap($conf['source'], $conf['source.']);
+					// If a filepath is given, transform this to an absolute path and fetch data
+				if ($path = t3lib_div::getFileAbsFileName($xmlsource)) {
+					$xmlsource = t3lib_div::getURL($path, 0, FALSE);
+				}
 			}
 
 		} else {
