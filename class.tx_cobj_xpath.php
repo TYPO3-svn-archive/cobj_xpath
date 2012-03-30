@@ -79,7 +79,6 @@ class tx_cobj_xpath {
 
 		} else {
 			$GLOBALS['TT']->setTSlogMessage('Source for XML is not configured.', 3);
-			return $oCObj->stdWrap($content, $conf['stdWrap.']);
 		}
 
 			// XPath expression
@@ -87,10 +86,9 @@ class tx_cobj_xpath {
 			$expression = $oCObj->stdWrap($conf['expression'], $conf['expression.']);
 		} else {
 			$GLOBALS['TT']->setTSlogMessage('No XPath expression set.', 3);
-			return $oCObj->stdWrap($content, $conf['stdWrap.']);
 		}
 
-		if (!empty($xmlsource)) {
+		if (!empty($xmlsource) && !empty($expression)) {
 
 				// Load a simpleXML object
 			libxml_use_internal_errors(true);
@@ -143,12 +141,10 @@ class tx_cobj_xpath {
 
 						case 'count':
 							$content = count($result);
-							return $oCObj->stdWrap($content, $conf['stdWrap.']);
 							break;
 
 						case 'boolean':
 							$content = TRUE;
-							return $oCObj->stdWrap($content, $conf['stdWrap.']);
 							break;
 
 						case 'xml':
@@ -184,11 +180,13 @@ class tx_cobj_xpath {
 					}
 
 						// Hand the result to split for further treatment with TS
-					if (is_array($conf['resultObj.'])) {
-						$conf['resultObj.']['token'] = '###COBJ_XPATH###';
-						$content = $oCObj->splitObj(implode('###COBJ_XPATH###', $result), $conf['resultObj.']);
-					} else {
-						$GLOBALS['TT']->setTSlogMessage('No resultObj configured.', 2);
+					if ($conf['return'] !== 'count' && $conf['return'] !== 'boolean') {
+						if (is_array($conf['resultObj.'])) {
+							$conf['resultObj.']['token'] = '###COBJ_XPATH###';
+							$content = $oCObj->splitObj(implode('###COBJ_XPATH###', $result), $conf['resultObj.']);
+						} else {
+							$GLOBALS['TT']->setTSlogMessage('No resultObj configured.', 2);
+						}
 					}
 
 				} else {
@@ -204,7 +202,7 @@ class tx_cobj_xpath {
 			}
 
 		} else {
-			$GLOBALS['TT']->setTSlogMessage('The configured XML source did not return any data.', 3);
+			$GLOBALS['TT']->setTSlogMessage('The configured XML source did not return any data or no XPATH expression was set.', 3);
 		}
 
 		return $oCObj->stdWrap($content, $conf['stdWrap.']);
