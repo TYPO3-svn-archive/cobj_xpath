@@ -3,7 +3,7 @@
 ########################################################################
 # Extension Manager/Repository config file for ext "cobj_xpath".
 #
-# Auto generated 30-03-2012 23:26
+# Auto generated 01-04-2012 09:01
 #
 # Manual updates:
 # Only the data in the array - everything else is removed by next
@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Extends tslib_cObj with a new cObject XPATH for XML treatment and display with TypoScript.',
 	'category' => 'fe',
 	'shy' => 0,
-	'version' => '1.0.1',
+	'version' => '1.1.0',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -42,7 +42,7 @@ $EM_CONF[$_EXTKEY] = array(
 		'suggests' => array(
 		),
 	),
-	'_md5_values_when_last_written' => 'a:6:{s:23:"class.tx_cobj_xpath.php";s:4:"4c18";s:16:"ext_autoload.php";s:4:"4f7e";s:12:"ext_icon.gif";s:4:"08dd";s:17:"ext_localconf.php";s:4:"84cc";s:14:"doc/README.txt";s:4:"5fec";s:14:"doc/manual.sxw";s:4:"2197";}',
+	'_md5_values_when_last_written' => 'a:7:{s:13:"ChangeLog.txt";s:4:"4521";s:23:"class.tx_cobj_xpath.php";s:4:"4c73";s:16:"ext_autoload.php";s:4:"4f7e";s:12:"ext_icon.gif";s:4:"08dd";s:17:"ext_localconf.php";s:4:"84cc";s:14:"doc/README.txt";s:4:"73d2";s:14:"doc/manual.sxw";s:4:"10bd";}',
 	'suggests' => array(
 	),
 );

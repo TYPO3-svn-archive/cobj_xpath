@@ -12,8 +12,7 @@ my.object {
 
 	expression [STRING + stdWrap] 
 	
-	source [STRING + stdWrap]
-	source.url = URL
+	source [URL / PATH / STRING / stdWrap]
 	
 	return = count|boolean|xml|array|json|string
 	

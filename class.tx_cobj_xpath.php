@@ -55,34 +55,23 @@ class tx_cobj_xpath {
 			return $oCObj->stdWrap($content, $conf['stdWrap.']);
 		}
 
-			// Fetch XML data
-		if (is_array($conf['source.']) || isset($conf['source'])) {
-
-				// Get XML by URL
-			if (isset($conf['source.']['url']) && t3lib_div::isValidUrl($conf['source.']['url'])) {
-
-				$xmlsource = t3lib_div::getURL($conf['source.']['url'], 0, FALSE);
-				if ($xmlsource === FALSE) {
-					$GLOBALS['TT']->setTSlogMessage('XML could not be fetched from URL.', 3);
-				}
-				// Get XML with stdWrap
-			} else {
-				if (isset($conf['source.']['url'])) {
-					unset($conf['source.']['url']);
-				}
-				$xmlsource = $oCObj->stdWrap($conf['source'], $conf['source.']);
-					// If a filepath is given, transform this to an absolute path and fetch data
-				if ($path = t3lib_div::getFileAbsFileName($xmlsource)) {
-					$xmlsource = t3lib_div::getURL($path, 0, FALSE);
-				}
+			// Fetch XML data - if source is neither a valid url nor a path, its considered a XML string
+		if (isset($conf['source']) || is_array($conf['source.'])) {
+				// First process the source property with stdWrap
+			$xmlsource = $oCObj->stdWrap($conf['source'], $conf['source.']);
+				// Fetch by URL
+			if (t3lib_div::isValidUrl($xmlsource)) {
+				$xmlsource = t3lib_div::getURL($xmlsource, 0, FALSE);
+				// Fetch by absolute path
+			} elseif ($path = t3lib_div::getFileAbsFileName($xmlsource)) {
+				$xmlsource = t3lib_div::getURL($path, 0, FALSE);
 			}
-
 		} else {
 			$GLOBALS['TT']->setTSlogMessage('Source for XML is not configured.', 3);
 		}
 
 			// XPath expression
-		if (is_array($conf['expression.']) || isset($conf['expression'])) {
+		if (isset($conf['expression']) || is_array($conf['expression.'])) {
 			$expression = $oCObj->stdWrap($conf['expression'], $conf['expression.']);
 		} else {
 			$GLOBALS['TT']->setTSlogMessage('No XPath expression set.', 3);
