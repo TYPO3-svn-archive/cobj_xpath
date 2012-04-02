@@ -57,14 +57,15 @@ class tx_cobj_xpath {
 
 			// Fetch XML data - if source is neither a valid url nor a path, its considered a XML string
 		if (isset($conf['source']) || is_array($conf['source.'])) {
-				// First process the source property with stdWrap
+				// First process the source string with stdWrap
 			$xmlsource = $oCObj->stdWrap($conf['source'], $conf['source.']);
-				// Fetch by URL
-			if (t3lib_div::isValidUrl($xmlsource)) {
-				$xmlsource = t3lib_div::getURL($xmlsource, 0, FALSE);
-				// Fetch by absolute path
-			} elseif ($path = t3lib_div::getFileAbsFileName($xmlsource)) {
+				// Fetch by (possible) path
+			$path = t3lib_div::getFileAbsFileName($xmlsource);
+			if (@is_file($path) === TRUE) {
 				$xmlsource = t3lib_div::getURL($path, 0, FALSE);
+				// Fetch by (possible) URL
+			} elseif (t3lib_div::isValidUrl($xmlsource) === TRUE) {
+				$xmlsource = t3lib_div::getURL($xmlsource, 0, FALSE);
 			}
 		} else {
 			$GLOBALS['TT']->setTSlogMessage('Source for XML is not configured.', 3);

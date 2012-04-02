@@ -1,5 +1,9 @@
 # Please also check the activity view at http://forge.typo3.org/projects/extension-cobj_xpath/activity?show_changesets=1
 
+1.1.1
+=====
+* Bugfix: Loading XML files from a path could fail in certain circumstances.
+
 1.1.0
 =====
 
