@@ -2,7 +2,7 @@
 
 1.1.1
 =====
-* Bugfix: Loading XML files from a path could fail in certain circumstances.
+* Bugfix: Loading XML files from a path could fail in certain circumstances. Fixed the manual.
 
 1.1.0
 =====
