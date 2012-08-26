@@ -1,5 +1,11 @@
 # Please also check the activity view at http://forge.typo3.org/projects/extension-cobj_xpath/activity?show_changesets=1
 
+1.2.0
+=====
+* Feature: New TypoScript property 'directReturn' for passing on the full result array as imploded string.
+* Feature: Full result of XPATH query is now available in current cObj->data for all return types.
+* Feature: New tutorials about usage with FLUIDTEMPLATE and eXist.
+
 1.1.1
 =====
 * Bugfix: Loading XML files from a path could fail in certain circumstances. Fixed the manual.

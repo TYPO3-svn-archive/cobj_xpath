@@ -27,7 +27,7 @@ if (!defined('TYPO3_MODE')) {
 }
 
 /**
- * Extends tslib_cObj with XPATH cobject
+ * Extends tslib_cObj with XPATH cObject
  *
  * @access public
  * @author Torsten Schrade
@@ -71,11 +71,19 @@ class tx_cobj_xpath {
 			$GLOBALS['TT']->setTSlogMessage('Source for XML is not configured.', 3);
 		}
 
-			// XPath expression
+			// XPATH expression - stdWrap capable
 		if (isset($conf['expression']) || is_array($conf['expression.'])) {
 			$expression = $oCObj->stdWrap($conf['expression'], $conf['expression.']);
 		} else {
 			$GLOBALS['TT']->setTSlogMessage('No XPath expression set.', 3);
+		}
+
+			// return type - stdWrap capable
+		if (isset($conf['return']) || is_array($conf['return.'])) {
+			$return = $oCObj->stdWrap($conf['return'], $conf['return.']);
+		} else {
+			$return = 'string';
+			$GLOBALS['TT']->setTSlogMessage('No return type for XPATH is set - using string as default.', 2);
 		}
 
 		if (!empty($xmlsource) && !empty($expression)) {
@@ -120,14 +128,14 @@ class tx_cobj_xpath {
 					}
 				}
 
-					// Perform XPath query
+					// Perform XPATH query
 				$result = $xml->xpath($expression);
 
 					// If there was a result
-				if (is_array($result) && count($result) > 0 && isset($conf['return'])) {
+				if (is_array($result) && count($result) > 0) {
 
-						// Return configured format for the query result
-					switch ($conf['return']) {
+						// Switch return type
+					switch ($return) {
 
 						case 'count':
 							$content = count($result);
@@ -145,13 +153,10 @@ class tx_cobj_xpath {
 
 						case 'array':
 							foreach ($result as $key => $value) {
-									// Convert to real PHP array
-									// Idea from soloman at http://www.php.net/manual/en/book.simplexml.php
+									// convert to real PHP array; idea from soloman at http://www.php.net/manual/en/book.simplexml.php
 								$json = json_encode($value);
 								$result[$key] = json_decode($json, TRUE);
 							}
-								// Replace the current $cObj->data array with the result array
-							$oCObj->data = $result;
 							break;
 
 						case 'json':
@@ -161,7 +166,6 @@ class tx_cobj_xpath {
 							break;
 
 						case 'string':
-							// Fall through
 						default:
 							foreach ($result as $key => $value) {
 								$result[$key] = (string) $value;
@@ -169,11 +173,22 @@ class tx_cobj_xpath {
 							break;
 					}
 
-						// Hand the result to split for further treatment with TS
-					if ($conf['return'] !== 'count' && $conf['return'] !== 'boolean') {
-						if (is_array($conf['resultObj.'])) {
+					if ($return !== 'count' && $return !== 'boolean') {
+							// resultObj for further processing with TypoScript
+						if (is_array($conf['resultObj.']) && !$conf['directReturn']) {
+								// write the result array to this cObj's data and TSFE (for array access with TSFE:cObj|data)
+							$originalRecord = $oCObj->data;
+							$originalTSFERecord = $GLOBALS['TSFE']->cObj->data;
+							$oCObj->data = $result;
+							$GLOBALS['TSFE']->cObj->data = $result;
+								// use split for TypoScript iteration through the result
 							$conf['resultObj.']['token'] = '###COBJ_XPATH###';
 							$content = $oCObj->splitObj(implode('###COBJ_XPATH###', $result), $conf['resultObj.']);
+								// restore original data
+							$oCObj->data = $originalRecord;
+							$GLOBALS['TSFE']->cObj->data = $originalTSFERecord;
+						} elseif ($conf['directReturn'] == 1) {
+							$content = implode('###COBJ_XPATH###', $result);
 						} else {
 							$GLOBALS['TT']->setTSlogMessage('No resultObj configured.', 2);
 						}
@@ -194,7 +209,6 @@ class tx_cobj_xpath {
 		} else {
 			$GLOBALS['TT']->setTSlogMessage('The configured XML source did not return any data or no XPATH expression was set.', 3);
 		}
-
 		return $oCObj->stdWrap($content, $conf['stdWrap.']);
 	}
 
