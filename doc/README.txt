@@ -11,16 +11,18 @@ my.object {
 	}
 
 	expression [STRING + stdWrap] 
-	
+
 	source [URL / PATH / STRING / stdWrap]
-	
-	return = count|boolean|xml|array|json|string
-	
+
+	return = count|boolean|xml|array|json|string [stdWrap]
+
 	resultObj [TypoScript split]
 	resultObj {
-		cObjNum = 1	
+		cObjNum = 1
 		1.current = 1
 	}
-	
+
+	directReturn [boolean]
+
 	stdWrap [stdWrap]
 }

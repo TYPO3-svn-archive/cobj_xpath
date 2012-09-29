@@ -40,7 +40,7 @@ class Tx_CobjXpath_ViewHelpers_ExplodeViewHelper extends Tx_Fluid_Core_ViewHelpe
 	 * @return string The decoded value
 	 */
 	public function render($content='') {
-			$content = Tx_Extbase_Utility_Arrays::trimExplode('###COBJ_XPATH###', $content, 1);
+		$content = Tx_Extbase_Utility_Arrays::trimExplode('###COBJ_XPATH###', $content, 1);
 		return $content;
 	}
 }
