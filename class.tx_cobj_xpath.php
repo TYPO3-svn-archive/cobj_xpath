@@ -138,11 +138,11 @@ class tx_cobj_xpath {
 					switch ($return) {
 
 						case 'count':
-							$content = count($result);
+							$result = count($result);
 							break;
 
 						case 'boolean':
-							$content = TRUE;
+							$result = TRUE;
 							break;
 
 						case 'xml':
@@ -173,9 +173,16 @@ class tx_cobj_xpath {
 							break;
 					}
 
+						// Possibility to return the result unprocessed (for example to a Fluid view helper or other calls from outside TypoScript)
+					if ($conf['returnRaw'] == 1) {
+						return $result;
+					}
+
+						// in case of a multi value result, provide further TypoScript processing with resultObj or implodeResult
 					if ($return !== 'count' && $return !== 'boolean') {
-							// resultObj for further processing with TypoScript
-						if (is_array($conf['resultObj.']) && !$conf['directReturn']) {
+
+							// resultObj
+						if (is_array($conf['resultObj.']) && !$conf['implodeResult']) {
 								// write the result array to this cObj's data and TSFE (for array access with TSFE:cObj|data)
 							$originalRecord = $oCObj->data;
 							$originalTSFERecord = $GLOBALS['TSFE']->cObj->data;
@@ -187,11 +194,23 @@ class tx_cobj_xpath {
 								// restore original data
 							$oCObj->data = $originalRecord;
 							$GLOBALS['TSFE']->cObj->data = $originalTSFERecord;
-						} elseif ($conf['directReturn'] == 1) {
-							$content = implode('###COBJ_XPATH###', $result);
+
+							// implodeResult
+						} elseif ($conf['implodeResult'] == 1) {
+
+							if (is_array($conf['implodeResult.'])) {
+								$token = $oCObj->stdWrap($conf['implodeResult.']['token'], $conf['implodeResult.']['token.']);
+							} else {
+								$token = '###COBJ_XPATH###';
+							}
+							$content = implode($token, $result);
+
 						} else {
-							$GLOBALS['TT']->setTSlogMessage('No resultObj configured.', 2);
+							$GLOBALS['TT']->setTSlogMessage('Handling of multivalue result not configured. Please use resultObj or implodeResult', 2);
 						}
+						// all other cases
+					} else {
+						$content = $result;
 					}
 
 				} else {

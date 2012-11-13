@@ -3,6 +3,8 @@
 my.object = XPATH
 my.object {
 
+	source [URL / PATH / STRING / stdWrap]
+
 	registerNamespace = [STRING prefix|ns]
 	registerNamespace {
 		getFromSource = [BOOLEAN]
@@ -10,9 +12,7 @@ my.object {
 		getFromSource.listNum [TypoScript listNum]
 	}
 
-	expression [STRING + stdWrap] 
-
-	source [URL / PATH / STRING / stdWrap]
+	expression [STRING + stdWrap]
 
 	return = count|boolean|xml|array|json|string [stdWrap]
 
@@ -22,7 +22,8 @@ my.object {
 		1.current = 1
 	}
 
-	directReturn [boolean]
+	implodeResult [boolean]
+	implodeResult.token [string + stdWrap]
 
 	stdWrap [stdWrap]
 }

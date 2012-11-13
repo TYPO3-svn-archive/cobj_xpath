@@ -40,6 +40,7 @@ $EM_CONF[$_EXTKEY] = array(
 		'conflicts' => array(
 		),
 		'suggests' => array(
+			'cobj_xslt' => '',
 		),
 	),
 	'_md5_values_when_last_written' => 'a:7:{s:13:"ChangeLog.txt";s:4:"7c68";s:23:"class.tx_cobj_xpath.php";s:4:"d97c";s:16:"ext_autoload.php";s:4:"4f7e";s:12:"ext_icon.gif";s:4:"08dd";s:17:"ext_localconf.php";s:4:"84cc";s:14:"doc/README.txt";s:4:"73d2";s:14:"doc/manual.sxw";s:4:"7157";}',
