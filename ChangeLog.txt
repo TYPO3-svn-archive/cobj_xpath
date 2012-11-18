@@ -2,10 +2,10 @@
 
 1.2.0
 =====
-* Feature: New TypoScript property 'directReturn' for passing on the full result array as imploded string.
-* Feature: XPATH query result is now available in current cObj->data as well as TSFE->cobj->data for all return types.
-* Feature: stdWrap for .return property
-* New tutorial: Usage with FLUIDTEMPLATE.
+* New query view helper for Fluid templates
+* New TypoScript property implodeResult
+* New tutorial about XPATH, FLUIDTEMPLATE and XSLT
+* New tutorial about <xpath> TypoTag
 
 1.1.1
 =====
