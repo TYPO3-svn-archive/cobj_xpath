@@ -24,7 +24,10 @@
 ***************************************************************/
 
 /**
- *
+ * Usage:
+ * 
+ * <xpath:query source="path/to/source.xml" expression="XPATH" return="count|boolean|string|array|json|xml" />
+ * 
  * @author Torsten Schrade
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
