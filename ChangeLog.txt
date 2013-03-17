@@ -1,5 +1,9 @@
 # Please also check the activity view at http://forge.typo3.org/projects/extension-cobj_xpath/activity?show_changesets=1
 
+1.2.1
+=====
+* Maintenance update for new TER extension policy
+
 1.2.0
 =====
 * New query view helper for Fluid templates

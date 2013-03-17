@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 Torsten Schrade <schradt@uni-mainz.de>
+*  (c) 2013 Torsten Schrade <schradt@uni-mainz.de>
 *
 *  All rights reserved
 *

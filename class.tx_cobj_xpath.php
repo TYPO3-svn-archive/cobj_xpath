@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  Copyright (c) 2012 Torsten Schrade <schradt@uni-mainz.de>
+ *  Copyright (c) 2013 Torsten Schrade <schradt@uni-mainz.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
