@@ -123,6 +123,10 @@ class tx_cobj_xpath {
 
 				if (isset($conf['registerNamespace'])) {
 					$namespace = t3lib_div::trimExplode('|', $conf['registerNamespace'], 1);
+						// mind the bug: in PHP 5.3.2 isValidUrl can sometimes fail even if a valid url is provided;
+						// using this old PHP version can in some cases lead to namespaces not being registered;
+						// details: http://forge.typo3.org/issues/42015
+						// https://bugs.php.net/bug.php?id=51192
 					if (count($namespace) == 2 && t3lib_div::isValidUrl($namespace[1])) {
 						$xml->registerXPathNamespace($namespace[0], $namespace[1]);
 					}
