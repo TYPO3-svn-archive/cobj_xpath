@@ -1,6 +1,0 @@
-﻿.. |img-3|      image:: ../../Images/manual_html_8b7ed94.png
-   :height: 145
-   :width: 371
-.. :align: left
-.. :border: 0
-.. :name: Grafik2

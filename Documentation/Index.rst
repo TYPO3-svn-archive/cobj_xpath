@@ -27,10 +27,10 @@ XPATH Content Object
 	en
 
 :Description:
-	enter description.
+	Manual for the extension cobj_xpath
 
 :Keywords:
-	reStructuredText, reST, sphinx, documentation
+	forEditors, forAdmins, forBeginners, forIntermediates
 
 :Copyright:
 	2013

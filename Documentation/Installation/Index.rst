@@ -25,7 +25,7 @@ Requirements
 
 - You will need libxml and SimpleXML enabled
 
-- The extension has been tested on TYPO3 versions 4.5 up to 6.0
+- The extension has been tested on TYPO3 versions 4.5 up to 6.1
 
 Installation
 ^^^^^^^^^^^^
