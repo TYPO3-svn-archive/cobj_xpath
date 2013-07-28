@@ -2,7 +2,8 @@
 
 1.2.1
 =====
-* Maintenance update for new TER extension policy
+* Version compatibility set to 4.5.0-6.1.99
+* ReST based manual
 
 1.2.0
 =====
