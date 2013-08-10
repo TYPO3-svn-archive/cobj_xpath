@@ -21,7 +21,7 @@ XPATH Content Object
 	cobj_xpath
 
 :Version:
-	1.2.1
+	1.3.0
 
 :Language:
 	en

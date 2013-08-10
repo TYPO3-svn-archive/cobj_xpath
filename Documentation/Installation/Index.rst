@@ -21,9 +21,9 @@ Installation
 Requirements
 ^^^^^^^^^^^^
 
-- You will need at least PHP 5.2+
+- You need at least PHP 5.2+
 
-- You will need libxml and SimpleXML enabled
+- You need libxml and SimpleXML enabled
 
 - The extension has been tested on TYPO3 versions 4.5 up to 6.1
 

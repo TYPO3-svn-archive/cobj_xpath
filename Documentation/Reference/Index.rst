@@ -44,7 +44,7 @@ You can also have a look into the README.txt file within the doc folder to get a
 
          Fetches the XML from the field 'my\_xml\_field' of the current page
          record.
-         
+
          **Example (stdWrap / FILE):** ::
 
             page.10 = XPATH

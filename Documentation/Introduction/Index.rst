@@ -49,10 +49,11 @@ Have a look at the tutorials in this manual.
 Credits
 ^^^^^^^
 
-This extension is being developed by the team from the `Digital
-Academy Mainz <http://www.digitale-akademie.de/>`_ for our `Digital
-Humanities <http://www.digitale-akademie.de/projekte/matrix.html>`_
-projects. We are glad if you find it useful too.
+This extension has been developed for the `Digital Humanities
+<http://www.digitale-akademie.de/projekte/matrix.html>`_ projects
+of the `Digital Academy Mainz <http://www.digitale-akademie.de/>`_
+where we have to deal with lots of XML. Glad if you find it
+useful too.
 
 Please rate
 ^^^^^^^^^^^
