@@ -1,18 +1,9 @@
-﻿
-
-.. ==================================================
+﻿.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
 
-.. ==================================================
-.. DEFINE SOME TEXTROLES
-.. --------------------------------------------------
-.. role::   underline
-.. role::   typoscript(code)
-.. role::   ts(typoscript)
-   :class:  typoscript
-.. role::   php(code)
+.. include:: ../Includes.txt
 
 
 ChangeLog
@@ -21,15 +12,11 @@ ChangeLog
 +----------------+---------------------------------------------------------------+
 | Version        | Changes                                                       |
 +================+===============================================================+
-| 1.3.0          | Feature release                                               |
-|                |                                                               |
-|                | - Version compatibility set to 4.5.0-6.1.99                   |
+| 1.3.0          | - Version compatibility set to 4.5.0-6.1.99                   |
 |                |                                                               |
 |                | - ReST based manual                                           |
 +----------------+---------------------------------------------------------------+
-| 1.2.0          | Feature release                                               |
-|                |                                                               |
-|                | - New XPATH view helper for Fluid templates                   |
+| 1.2.0          | - New XPATH view helper for Fluid templates                   |
 |                |                                                               |
 |                | - New TypoScript property implodeResult                       |
 |                |                                                               |
@@ -37,13 +24,9 @@ ChangeLog
 |                |                                                               |
 |                | - New tutorial about <xpath> TypoTag                          |
 +----------------+---------------------------------------------------------------+
-| 1.1.1          | Maintenance release                                           |
-|                |                                                               |
-|                | - Loading XML files from a path could fail sometimes          |
+| 1.1.1          | - Loading XML files from a path could fail sometimes          |
 +----------------+---------------------------------------------------------------+
-| 1.1.0          | Feature release                                               |
-|                |                                                               |
-|                | - source.url property fused into parent property source       |
+| 1.1.0          | - source.url property fused into parent property source       |
 +----------------+---------------------------------------------------------------+
-| 1.0.0          | First public version                                          |
+| 1.0.0          | - First public version                                        |
 +----------------+---------------------------------------------------------------+

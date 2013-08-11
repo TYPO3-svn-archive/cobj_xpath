@@ -1,18 +1,9 @@
-﻿
-
-.. ==================================================
+﻿.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
 
-.. ==================================================
-.. DEFINE SOME TEXTROLES
-.. --------------------------------------------------
-.. role::   underline
-.. role::   typoscript(code)
-.. role::   ts(typoscript)
-   :class:  typoscript
-.. role::   php(code)
+.. include:: ../../Includes.txt
 
 
 FLUIDTEMPLATE, XPATH & XSLT
@@ -86,7 +77,7 @@ fileadmin/templates/Poe.html:
 
 Next we construct a basic XPATH cObject:
 
-::
+.. code-block:: ts
 
    lib.xpath = XPATH
    lib.xpath {
@@ -109,7 +100,7 @@ FLUIDTEMPLATE afterwards. We can just copy the library into the
 variable declaration and change the XPATH expression to match the
 values we want:
 
-::
+.. code-block:: ts
 
    page.10 = FLUIDTEMPLATE
    page.10 {
