@@ -11,7 +11,7 @@ conf.py:
   latex_documents:
   - - Index
     - cobj_xpath.tex
-    - cobj_xpath
+    - XPATH Content Object
     - Torsten Schrade
     - manual
   latex_elements:
