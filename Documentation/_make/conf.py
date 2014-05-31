@@ -41,7 +41,7 @@ master_doc = 'Index'
 
 # General information about the project.
 project = u'cobj_xpath'
-copyright = u'2013, Torsten Schrade'
+copyright = u'2014, Torsten Schrade'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

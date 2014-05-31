@@ -78,9 +78,9 @@ You can also have a look into the README.txt file within the doc folder to get a
 
             page.10 = XPATH
             page.10 {
-            registerNamespace = c|http://example.org/chapter-title
-            expression = //c:title
-            [...]
+               registerNamespace = c|http://example.org/chapter-title
+               expression = //c:title
+               [...]
             }
 
          It's possible to extract the namespaces of the XML source with the
@@ -130,6 +130,7 @@ You can also have a look into the README.txt file within the doc folder to get a
                expression.insertData = 1
                [...]
             }
+
          Fetches the item by the number found in the TypoScript register.
 
 

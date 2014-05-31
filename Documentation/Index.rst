@@ -14,49 +14,56 @@ XPATH Content Object
 
 .. only:: html
 
-:Classification:
-	cobj_xpath
+	:Classification:
+		cobj_xpath
 
-:Version:
-	1.3.0
+	:Version:
+		1.6.0
 
-:Language:
-	en
+	:Language:
+		en
 
-:Description:
-	Manual for the extension cobj_xpath
+	:Description:
+		Manual for the extension cobj_xpath
 
-:Keywords:
-	forEditors, forAdmins, forBeginners, forIntermediates
+	:Keywords:
+		forEditors, forAdmins, forBeginners, forIntermediates
 
-:Copyright:
-	2013
+	:Copyright:
+		2014
 
-:Author:
-	Torsten Schrade
+	:Author:
+		Torsten Schrade
 
-:Email:
-	schradt@uni-mainz.de
+	:Email:
+		schradt@uni-mainz.de
 
-:License:
-	This document is published under the Open Content License
-	available from http://www.opencontent.org/opl.shtml
+	:License:
+		This document is published under the Open Content License
+		available from http://www.opencontent.org/opl.shtml
 
-:Rendered:
-	|today|
+	:Rendered:
+		|today|
 
-The content of this document is related to TYPO3,
-a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
+	The content of this document is related to TYPO3,
+	a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
+
+	**Other versions of this document**
+
+	:PDF:
+		http://docs.typo3.org/typo3cms/extensions/cobj_xpath/latest/_pdf/
+
+	**Table of Contents**
 
 .. toctree::
 	:maxdepth: 5
 	:titlesonly:
 	:glob:
 
-   Introduction/Index
-   Installation/Index
-   Reference/Index
-   Tutorials/Index
-   KnownProblems/Index
-   To-doList/Index
-   Changelog/Index
+	Introduction/Index
+	Installation/Index
+	Reference/Index
+	Tutorials/Index
+	KnownProblems/Index
+	To-doList/Index
+	Changelog/Index

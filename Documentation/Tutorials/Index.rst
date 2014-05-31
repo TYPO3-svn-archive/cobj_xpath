@@ -11,12 +11,12 @@ Tutorials
 
 
 .. toctree::
-   :maxdepth: 5
-   :titlesonly:
-   :glob:
+	:maxdepth: 5
+	:titlesonly:
+	:glob:
 
-   XpathAndStdwrap/Index
-   UsingXpathToReadFlexformValues/Index
-   TransformDisplayAnExternalRssFeed/Index
-   FluidtemplateXpathXslt/Index
-   XpathTypotag/Index
+	XpathAndStdwrap/Index
+	UsingXpathToReadFlexformValues/Index
+	TransformDisplayAnExternalRssFeed/Index
+	FluidtemplateXpathXslt/Index
+	XpathTypotag/Index

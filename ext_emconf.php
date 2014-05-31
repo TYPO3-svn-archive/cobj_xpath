@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'XPATH Content Object',
-	'description' => 'Extends tslib_cObj with a new cObject XPATH for XML treatment and display with TypoScript.',
+	'description' => 'Extends TypoScript with a new cObject XPATH for flexible handling of XML content.',
 	'category' => 'fe',
 	'shy' => 0,
 	'version' => '1.5.0',
@@ -34,7 +34,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '4.5.0-6.1.99',
+			'typo3' => '4.5.0-6.2.99',
 		),
 		'conflicts' => array(
 		),
