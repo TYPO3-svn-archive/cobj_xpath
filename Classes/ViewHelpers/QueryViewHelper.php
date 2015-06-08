@@ -80,7 +80,7 @@ class Tx_CobjXpath_ViewHelpers_QueryViewHelper extends Tx_Fluid_Core_ViewHelper_
 			'returnRaw' => 1
 		);
 
-		$content = $this->contentObject->cObjHookObjectsArr['XPATH']->cObjGetSingleExt('XPATH', $configuration, '', $this->contentObject);
+		$content = $this->contentObject->cObjGetSingle('XPATH', $configuration, '');
 
 		return $content;
 	}
