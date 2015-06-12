@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Extends TypoScript with a new cObject XPATH for flexible handling of XML content.',
 	'category' => 'fe',
 	'shy' => 0,
-	'version' => '1.6.0',
+	'version' => '1.7.0',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -28,13 +28,13 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearcacheonload' => 1,
 	'lockType' => '',
 	'author' => 'Torsten Schrade',
-	'author_email' => 'schradt@uni-mainz.de',
+	'author_email' => 'Torsten.Schrade@adwmainz.de',
 	'author_company' => 'Academy of Sciences and Literature | Mainz',
 	'CGLcompliance' => '',
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '6.2.0-6.2.99',
+			'typo3' => '6.2.0-7.9.99',
 		),
 		'conflicts' => array(
 		),

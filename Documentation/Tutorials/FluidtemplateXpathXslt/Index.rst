@@ -152,7 +152,7 @@ of our template:
 
 ::
 
-   {namespace xpath = Tx_CobjXpath_ViewHelpers}
+   {namespace xpath = ADWLM\CobjXpath\ViewHelpers}
 
 Next we construct a <f:for> loop in the <f:else> branch and set up the
 Xpath query:
@@ -354,7 +354,7 @@ And the FLUIDTEMPLATE:
 
 ::
 
-   {namespace xpath = Tx_CobjXpath_ViewHelpers}
+   {namespace xpath = ADWLM\CobjXpath\ViewHelpers}
 
    <hgroup>
       <h1>{title}</h1>

@@ -1,8 +1,9 @@
 <?php
+namespace ADWLM\CobjXpath\ContentObject;
 /***************************************************************
  *  Copyright notice
  *
- *  Copyright (c) 2013 Torsten Schrade <schradt@uni-mainz.de>
+ *  Copyright (c) 2015 Torsten Schrade <Torsten.Schrade@adwmainz.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,19 +23,15 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\DebugUtility;
+
 if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
-/**
- * Extends tslib_cObj with XPATH cObject
- *
- * @access public
- * @author Torsten Schrade
- * @package TYPO3
- * @subpackage tx_cobj_xpath
- */
-class tx_cobj_xpath {
+class XpathContentObject {
 
 	/**
 	 * Renders the XPATH content object
@@ -42,10 +39,11 @@ class tx_cobj_xpath {
 	 * @param string $name XPATH
 	 * @param array $conf TypoScript configuration of the cObj
 	 * @param string $TSkey Key in the TypoScript array passed to this function
-	 * @param tslib_cObj $oCObj Reference to the parent class
+	 * @param ContentObjectRenderer $oCObj Reference to the parent class
+	 *
 	 * @return mixed
 	 */
-	public function cObjGetSingleExt($name, array $conf, $TSkey, tslib_cObj &$oCObj) {
+	public function cObjGetSingleExt($name, array $conf, $TSkey, ContentObjectRenderer &$oCObj) {
 
 		$content = '';
 
@@ -60,12 +58,12 @@ class tx_cobj_xpath {
 				// First process the source string with stdWrap
 			$xmlsource = $oCObj->stdWrap($conf['source'], $conf['source.']);
 				// Fetch by (possible) path
-			$path = t3lib_div::getFileAbsFileName($xmlsource);
+			$path = GeneralUtility::getFileAbsFileName($xmlsource);
 			if (@is_file($path) === TRUE) {
-				$xmlsource = t3lib_div::getURL($path, 0, FALSE);
+				$xmlsource = GeneralUtility::getURL($path, 0, FALSE);
 				// Fetch by (possible) URL
-			} elseif (t3lib_div::isValidUrl($xmlsource) === TRUE) {
-				$xmlsource = t3lib_div::getURL($xmlsource, 0, FALSE);
+			} elseif (GeneralUtility::isValidUrl($xmlsource) === TRUE) {
+				$xmlsource = GeneralUtility::getURL($xmlsource, 0, FALSE);
 			}
 		} else {
 			$GLOBALS['TT']->setTSlogMessage('Source for XML is not configured.', 3);
@@ -92,7 +90,7 @@ class tx_cobj_xpath {
 			libxml_use_internal_errors(true);
 			$xml = simplexml_load_string($xmlsource);
 
-			if ($xml instanceof SimpleXMLElement) {
+			if ($xml instanceof \SimpleXMLElement) {
 
 					// Possible namespaces for query
 				if (isset($conf['registerNamespace.']['getFromSource'])
@@ -101,7 +99,7 @@ class tx_cobj_xpath {
 						// Print namespaces
 					if (isset($conf['registerNamespace.']['getFromSource.']['debug'])
 						&& (boolean) $conf['registerNamespace.']['getFromSource.']['debug'] === TRUE) {
-						t3lib_utility_Debug::debug($namespaces);
+						DebugUtility::debug($namespaces);
 					}
 					if (count($namespaces) > 0
 							&& isset($conf['registerNamespace.']['getFromSource.']['listNum'])
@@ -122,12 +120,12 @@ class tx_cobj_xpath {
 				}
 
 				if (isset($conf['registerNamespace'])) {
-					$namespace = t3lib_div::trimExplode('|', $conf['registerNamespace'], 1);
+					$namespace = GeneralUtility::trimExplode('|', $conf['registerNamespace'], 1);
 						// mind the bug: in PHP 5.3.2 isValidUrl can sometimes fail even if a valid url is provided;
 						// using this old PHP version can in some cases lead to namespaces not being registered;
 						// details: http://forge.typo3.org/issues/42015
 						// https://bugs.php.net/bug.php?id=51192
-					if (count($namespace) == 2 && t3lib_div::isValidUrl($namespace[1])) {
+					if (count($namespace) == 2 && GeneralUtility::isValidUrl($namespace[1])) {
 						$xml->registerXPathNamespace($namespace[0], $namespace[1]);
 					}
 				}
@@ -239,10 +237,10 @@ class tx_cobj_xpath {
 	 * Returns XML error codes for the TSFE admin panel.
 	 * Function inspired by http://www.php.net/manual/en/function.libxml-get-errors.php
 	 *
-	 * @param LibXMLError $error
+	 * @param \LibXMLError $error
 	 * @return string
 	 */
-	private function getXmlErrorCode(LibXMLError $error) {
+	private function getXmlErrorCode(\LibXMLError $error) {
 		$errormessage = '';
 
 		switch ($error->level) {
@@ -265,9 +263,5 @@ class tx_cobj_xpath {
 
 		return $errormessage;
 	}
-}
-
-if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cobj_xpath/class.tx_cobj_xpath.php'])) {
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cobj_xpath/class.tx_cobj_xpath.php']);
 }
 ?>

@@ -1,8 +1,9 @@
 <?php
+namespace ADWLM\CobjXpath\ViewHelpers;
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2013 Torsten Schrade <schradt@uni-mainz.de>
+*  (c) 2015 Torsten Schrade <Torsten.Schrade@adwmainz.de>
 *
 *  All rights reserved
 *
@@ -27,39 +28,36 @@
  * Usage:
  * 
  * <xpath:query source="path/to/source.xml" expression="XPATH" return="count|boolean|string|array|json|xml" />
- * 
- * @author Torsten Schrade
- * @version $Id$
- * @copyright Copyright belongs to the respective authors
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- * @package dabase
+ *
  */
 
-class Tx_CobjXpath_ViewHelpers_QueryViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class QueryViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
-	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
 	 */
 	protected $configurationManager;
 
 	/**
-	 * @var tslib_cObj
+	 * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer
 	 */
 	protected $contentObject;
 
 	/**
-	 * @param Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager
+	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
 	 * @return void
 	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager) {
+	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
 		$this->configurationManager = $configurationManager;
 		$this->contentObject = $this->configurationManager->getContentObject();
 		$this->contentObject->start(array(),'');
+		$this->contentObject->cObjHookObjectsArr['XPATH'] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('ADWLM\\CobjXpath\\ContentObject\\XpathContentObject');
 	}
 
 	/**
-	 * Fluid view helper wrapper for the XPATH content object. Calls the content object class directly. This makes it possible to 
-	 * return multi value results like arrays directly to the fluid template
+	 * Fluid view helper wrapper for the XPATH content object. Calls the content object class directly. This makes it possible to
+	 * return multi value results (arrays) directly from the Fluid template. To achieve a result not automatically converted to string
+	 * "returnRaw" is always set to 1. Also see the inject method above and the direct instantiation of the XPATH cobj there.
 	 * 
 	 * @param mixed $source
 	 * @param string $expression
@@ -80,7 +78,7 @@ class Tx_CobjXpath_ViewHelpers_QueryViewHelper extends Tx_Fluid_Core_ViewHelper_
 			'returnRaw' => 1
 		);
 
-		$content = $this->contentObject->cObjGetSingle('XPATH', $configuration, '');
+		$content = $this->contentObject->cObjHookObjectsArr['XPATH']->cObjGetSingleExt('XPATH', $configuration, '', $this->contentObject);
 
 		return $content;
 	}

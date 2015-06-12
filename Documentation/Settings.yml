@@ -4,10 +4,10 @@
 
 ---
 conf.py:
-  copyright: 2014
+  copyright: 2015
   project: XPATH Content Object
-  version: 1.6.0
-  release: 1.6.0
+  version: 1.7.0
+  release: 1.7.0
   latex_documents:
   - - Index
     - cobj_xpath.tex
